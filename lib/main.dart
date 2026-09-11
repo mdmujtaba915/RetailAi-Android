@@ -89,7 +89,16 @@ class _DashboardPageState extends State<DashboardPage> {
     });
 
     try {
-      final result = await FilePicker.platform.pickFiles(
+      
+      final file = await FilePicker.pickFile(
+  type: FileType.custom,
+  allowedExtensions: ['csv'],
+);
+
+if (file == null) return;
+
+final bytes = await file.readAsBytes();
+final text = utf8.decode(bytes);
         type: FileType.custom,
         allowedExtensions: <String>['csv'],
         withData: true,
